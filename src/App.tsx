@@ -47,42 +47,46 @@ function calculate(start: Day) {
 function isHoliday(date: Date) {
   const day = date.getDate();
   const dayOfWeek = date.getDay();
-  const month = date.getMonth()-1;
-  console.log(day+' '+dayOfWeek+' '+month);
+  const month = date.getMonth();
   //saturday, sunday -> zeslanie Ducha Swietego check redundant
   if (dayOfWeek === 0 || dayOfWeek === 6) return true;
   switch (month) {
-    case 1: //styczen
+    case 0: //styczen
       //nowy rok, trzech kroli
       if (day === 1 || day === 6) return true;
       break;
-    case 5: //maj
+    case 4: //maj
       //majowka
       if (day === 1 || day === 3) return true;
       break;
-    case 8: //sierpien
+    case 7: //sierpien
       //wnieboziecie NMP
       if (day === 15) return true;
       break;
-    case 11: //listopad
+    case 10: //listopad
       //wszystkich swietych, swieto niepodleglosci
       if (day === 1 || day === 11) return true;
       break;
-    case 12: //grudzien
+    case 11: //grudzien
       //Boze narodzenie, sw. Szczepana
       if (day === 25 || day === 26) return true;
       break;
   }
   //caculate wielkanoc for desirable year;
   const wielkanocDay = wielkanoc(date.getFullYear());
+  const poniedzialekWielkanocny = new Date(
+    wielkanocDay.getTime() + 1000 * 60 * 60 * 24
+  );
+  const bozeCialo = new Date(wielkanocDay.getTime() + 1000 * 60 * 60 * 24 * 60);
 
-  //wielkanoc, poniedzialek wielkanocny, Boze Cialo
+  //wielkanoc is sunday -> check redundant , poniedzialek wielkanocny, Boze Cialo
   if (
-    date === wielkanocDay ||
-    date === new Date(wielkanocDay.getTime() + 1000 * 60 * 60 * 24) ||
-    date === new Date(wielkanocDay.getTime() + 1000 * 60 * 60 * 24 * 60)
-  )
+    (day === poniedzialekWielkanocny.getDate() &&
+      month === poniedzialekWielkanocny.getMonth()) ||
+    (day === bozeCialo.getDate() && month === bozeCialo.getMonth())
+  ) {
     return true;
+  }
 
   return false;
 }
