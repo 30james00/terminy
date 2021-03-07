@@ -5,17 +5,77 @@ import DatePicker, { Day, DayValue } from 'react-modern-calendar-datepicker';
 
 function App() {
   const [start, changeStart] = useState<DayValue>();
+  const [type, changeType] = useState('day');
+  const [amount, changeAmount] = useState(14);
 
   return (
-    <div className='container h-screen flex flex-col justify-center content-center'>
-      <h1 className='text-center text-4xl'>Terminy</h1>
-      <p>Wybierz datę poczatkową:</p>
+    <div className='container h-screen flex flex-col place-content-center place-items-center'>
+      <h1 className='mb-4 text-4xl font-black'>Terminy</h1>
+      <p className=''>Wybierz datę poczatkową:</p>
       <div className='max-w-md'>
-        <DatePicker value={start} onChange={changeStart} />
+        <label>
+          <DatePicker value={start} onChange={changeStart} />
+        </label>
       </div>
+      <form>
+        <label>
+          Ilość:
+          <input
+            value={amount}
+            onChange={(event) => changeAmount(parseInt(event.target.value))}
+            type='number'
+            min='1'
+            max='100'
+            name='number'
+            id='number'
+          />
+        </label>
+        <label>
+          <input
+            type='radio'
+            name='type'
+            value='day'
+            checked={type === 'day'}
+            onChange={(event) => changeType(event.target.value)}
+          />
+          Dni
+        </label>
+        <label>
+          <input
+            type='radio'
+            name='type'
+            value='week'
+            checked={type === 'week'}
+            onChange={(event) => changeType(event.target.value)}
+          />
+          Tygodni
+        </label>
+        <label>
+          <input
+            type='radio'
+            name='type'
+            value='month'
+            checked={type === 'month'}
+            onChange={(event) => changeType(event.target.value)}
+          />
+          Miesięcy
+        </label>
+        <label>
+          <input
+            type='radio'
+            name='type'
+            value='year'
+            checked={type === 'year'}
+            onChange={(event) => changeType(event.target.value)}
+          />
+          Lat
+        </label>
+      </form>
       <div>
         <p>
-          {start ? calculate(start).toString() : 'Wprowadz date poczatkowa'}
+          {start
+            ? calculate(start, amount, type).toString()
+            : 'Wprowadz date poczatkowa'}
         </p>
       </div>
     </div>
@@ -34,10 +94,33 @@ function wielkanoc(year: number) {
   else return new Date(year, 3, rd + re - 9);
 }
 
-function calculate(start: Day) {
+function calculate(start: Day, amount: number, type: string) {
   let startDate: Date;
   startDate = new Date(start.year, start.month - 1, start.day);
-  let endDate = new Date(startDate.getTime() + 1000 * 60 * 60 * 24 * 7);
+  let endDate: Date;
+
+  //calculate endDate given term type
+  switch (type) {
+    case 'day':
+      endDate = new Date(startDate.getTime() + 1000 * 60 * 60 * 24 * amount);
+      break;
+    case 'week':
+      endDate = new Date(startDate.setDate(startDate.getDate() + amount * 7));
+      break;
+    case 'month':
+      endDate = new Date(startDate.setMonth(startDate.getMonth() + amount));
+      break;
+    case 'year':
+      endDate = new Date(
+        startDate.setFullYear(startDate.getFullYear() + amount)
+      );
+      break;
+    //radio must be unchecked - imposible?
+    default:
+      return startDate;
+      break;
+  }
+  //move to next day if last day is non-labour day
   while (isHoliday(endDate)) {
     endDate = new Date(endDate.getTime() + 1000 * 60 * 60 * 24);
   }
