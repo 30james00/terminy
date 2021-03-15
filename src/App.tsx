@@ -21,6 +21,7 @@ function App() {
         </label>
       </div>
       <form className='flex flex-col'>
+        <p className='mb-1'>{'Ustaw parametry terminu:'}</p>
         <label>
           {'Ilość:'}
           <input
@@ -43,7 +44,7 @@ function App() {
             checked={type === 'day'}
             onChange={(event) => changeType(event.target.value)}
           />
-          Dni
+          {'Dni'}
         </label>
         <label>
           <input
@@ -54,7 +55,7 @@ function App() {
             checked={type === 'week'}
             onChange={(event) => changeType(event.target.value)}
           />
-          Tygodni
+          {'Tygodni'}
         </label>
         <label>
           <input
@@ -65,7 +66,7 @@ function App() {
             checked={type === 'month'}
             onChange={(event) => changeType(event.target.value)}
           />
-          Miesięcy
+          {'Miesięcy'}
         </label>
         <label>
           <input
@@ -76,22 +77,21 @@ function App() {
             checked={type === 'year'}
             onChange={(event) => changeType(event.target.value)}
           />
-          Lat
+          {'Lat'}
         </label>
       </form>
       <div>
-        <div>
-          {start ? (
-            amount && type ? (
-              <Output date={calculate(start, amount, type)} />
-            ) : (
-              <InvalidDataMessage message={'Wprowadź długość terminu'} />
-            )
+        {start ? (
+          amount && type ? (
+            <Output date={calculate(start, amount, type)} />
           ) : (
-            <InvalidDataMessage message={'Wprowadź datę początkową'} />
-          )}
-        </div>
+            <InvalidDataMessage message={'Wprowadź długość terminu'} />
+          )
+        ) : (
+          <InvalidDataMessage message={'Wprowadź datę początkową'} />
+        )}
       </div>
+      <p className='mb-1'>{'Sposób obliczenia terminu:'}</p>
     </div>
   );
 }
