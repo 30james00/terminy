@@ -1,24 +1,33 @@
 import React, { useState } from 'react';
 
-import 'react-modern-calendar-datepicker/lib/DatePicker.css';
-import DatePicker, { DayValue } from 'react-modern-calendar-datepicker';
-import { calculate } from './helpers/calculatios';
+import { calculate } from './helpers/calculations';
 import Output from './components/Output';
 import InvalidDataMessage from './components/InvalidDataMessage';
 
 function App() {
-  const [start, changeStart] = useState<DayValue>();
+  const [start, changeStart] = useState<Date>();
   const [type, changeType] = useState('day');
   const [amount, changeAmount] = useState(14);
+
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const val = event.target.valueAsDate;
+    if (val) changeStart(val);
+  };
 
   return (
     <div className='container h-screen flex flex-col place-content-center place-items-center'>
       <h1 className='mb-4 text-4xl font-black'>Terminy</h1>
-      <p className='mb-1'>Wybierz datę poczatkową:</p>
+      <p className='mb-1'>{'Wybierz datę poczatkową:'}</p>
       <div className='mb-2'>
-        <label>
-          <DatePicker value={start} onChange={changeStart} />
-        </label>
+        <form>
+          <input
+            className='px-2 py-1 border-2 rounded'
+            onChange={handleDateChange}
+            type='date'
+            name='date'
+            id='date'
+          />
+        </form>
       </div>
       <form className='flex flex-col'>
         <p className='mb-1'>{'Ustaw parametry terminu:'}</p>

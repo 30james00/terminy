@@ -1,5 +1,3 @@
-import { Day } from "react-modern-calendar-datepicker";
-
 function wielkanoc(year: number) {
   let a = 24;
   let b = 5;
@@ -12,35 +10,34 @@ function wielkanoc(year: number) {
   else return new Date(year, 3, rd + re - 9);
 }
 
-function calculate(start: Day, amount: number, type: string) {
-  let startDate: Date;
-  startDate = new Date(start.year, start.month - 1, start.day);
+function calculate(start: Date, amount: number, type: string) {
+  let startDate = new Date(start);
   let endDate: Date;
-
   //calculate endDate given term type
   switch (type) {
     case 'day':
       endDate = new Date(startDate.getTime() + 1000 * 60 * 60 * 24 * amount);
       break;
-    case 'week':
+      case 'week':
       endDate = new Date(startDate.setDate(startDate.getDate() + amount * 7));
       break;
     case 'month':
       endDate = new Date(startDate.setMonth(startDate.getMonth() + amount));
       break;
-    case 'year':
+      case 'year':
       endDate = new Date(
         startDate.setFullYear(startDate.getFullYear() + amount)
-      );
+        );
       break;
     //radio must be unchecked - imposible?
     default:
       return startDate;
-  }
+    }
   //move to next day if last day is non-labour day
   while (isHoliday(endDate)) {
     endDate = new Date(endDate.getTime() + 1000 * 60 * 60 * 24);
   }
+  console.log(start)
   return endDate;
 }
 
