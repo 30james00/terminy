@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Term from './helpers/Term'
+import Term from './helpers/Term';
 import Output from './components/Output';
 import InvalidDataMessage from './components/InvalidDataMessage';
 
@@ -101,6 +101,9 @@ function App() {
         )}
       </div>
       <p className='mb-1'>{'Sposób obliczenia terminu:'}</p>
+      {start?.getSteps().map((value, idx) => (
+        <p key={idx}>{value.date.toString() + ' ' + value.step}</p>
+      ))}
     </div>
   );
 }
