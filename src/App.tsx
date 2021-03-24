@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
-import { calculate } from './helpers/calculations';
+import Term from './helpers/Term'
 import Output from './components/Output';
 import InvalidDataMessage from './components/InvalidDataMessage';
 
 function App() {
-  const [start, changeStart] = useState<Date>();
+  const [start, changeStart] = useState<Term>();
   const [type, changeType] = useState('day');
   const [amount, changeAmount] = useState(14);
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.valueAsDate;
-    if (val) changeStart(val);
+    if (val) changeStart(new Term(val));
   };
 
   return (
@@ -92,7 +92,7 @@ function App() {
       <div>
         {start ? (
           amount && type ? (
-            <Output date={calculate(start, amount, type)} />
+            <Output date={start.calculate(amount, type)} />
           ) : (
             <InvalidDataMessage message={'Wprowadź długość terminu'} />
           )
