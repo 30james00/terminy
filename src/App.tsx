@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import Term from './helpers/Term';
 import Output from './components/Output';
 import InvalidDataMessage from './components/InvalidDataMessage';
+import CalculationVisualisation from './components/CalculationVisualisation';
 
 function App() {
-  const [start, changeStart] = useState<Term>();
+  const [start, changeStart] = useState<Term | null>(null);
   const [type, changeType] = useState('day');
   const [amount, changeAmount] = useState(14);
 
@@ -92,7 +93,11 @@ function App() {
       <div>
         {start ? (
           amount && type ? (
-            <Output date={start.calculate(amount, type)} />
+            <div>
+              <Output date={start.calculate(amount, type)} />
+              <p className='mb-1'>{'Sposób obliczenia terminu:'}</p>
+              <CalculationVisualisation steps={start.getSteps()} />
+            </div>
           ) : (
             <InvalidDataMessage message={'Wprowadź długość terminu'} />
           )
@@ -100,10 +105,6 @@ function App() {
           <InvalidDataMessage message={'Wprowadź datę początkową'} />
         )}
       </div>
-      <p className='mb-1'>{'Sposób obliczenia terminu:'}</p>
-      {start?.getSteps().map((value, idx) => (
-        <p key={idx}>{value.date.toString() + ' ' + value.step}</p>
-      ))}
     </div>
   );
 }

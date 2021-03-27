@@ -1,33 +1,9 @@
 import React from 'react';
+import { Week, Year } from '../helpers/calendar';
 
 interface Props {
   date: Date;
 }
-
-const week: Array<string> = [
-  'niedziela',
-  'poniedziałek',
-  'wtorek',
-  'środa',
-  'czwartek',
-  'piątek',
-  'sobota',
-];
-
-const year: Array<string> = [
-  'stycznia',
-  'lutego',
-  'marca',
-  'kwietnia',
-  'maja',
-  'czerwca',
-  'lipca',
-  'sierpnia',
-  'września',
-  'października',
-  'listopada',
-  'grudnia',
-];
 
 const Output: React.FC<Props> = ({ date }) => {
   return (
@@ -36,11 +12,11 @@ const Output: React.FC<Props> = ({ date }) => {
       <p className='text-green-700 text-xl'>
         {date.getDate() +
           ' ' +
-          year[date.getMonth()] +
+          Year[date.getMonth()] +
           ' ' +
           date.getFullYear()}
       </p>
-      <p className='text-green-700 text-lg'>{week[date.getDay()]}</p>
+      <p className='text-green-700 text-lg'>{Week[date.getDay()]}</p>
     </div>
   );
 };
