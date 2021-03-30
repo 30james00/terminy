@@ -52,8 +52,8 @@ const CalculationVisualisation:React.FC<Props> = ({steps}) => {
     <div>
       {
         steps.map((value, inx) => {
-          return (<div>
-            <p>{value.date.getDate() + ' ' + Year[value.date.getMonth()] + ' ' + value.date.getFullYear()}</p>
+          return (<div className='flex justify-between'>
+            <p className='mr-2 text-gray-700'> {value.date.getDate() + ' ' + Year[value.date.getMonth()] + ' ' + value.date.getFullYear()}</p>
             <p>{label(value.step)}</p>
           </div>)
         })

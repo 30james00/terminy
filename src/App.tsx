@@ -93,16 +93,20 @@ function App() {
       <div>
         {start ? (
           amount && type ? (
-            <div>
-              <Output date={start.calculate(amount, type)} />
-              <p className='mb-1'>{'Sposób obliczenia terminu:'}</p>
-              <CalculationVisualisation steps={start.getSteps()} />
-            </div>
+            <Output date={start.calculate(amount, type)} />
           ) : (
             <InvalidDataMessage message={'Wprowadź długość terminu'} />
           )
         ) : (
           <InvalidDataMessage message={'Wprowadź datę początkową'} />
+        )}
+      </div>
+      <div>
+        {start && (
+          <div className='flex flex-col place-content-center place-items-center'>
+            <p className='mb-1'>{'Sposób obliczenia terminu:'}</p>
+            <CalculationVisualisation steps={start.getSteps()} />
+          </div>
         )}
       </div>
     </div>
