@@ -16,7 +16,7 @@ function App() {
   };
 
   return (
-    <div className='container h-screen flex flex-col place-content-center place-items-center'>
+    <div className='container flex flex-col place-content-center place-items-center mt-3 p-2'>
       <h1 className='mb-4 text-4xl font-black'>Terminy</h1>
       <p className='mb-1'>{'Wybierz datę poczatkową:'}</p>
       <div className='mb-2'>
