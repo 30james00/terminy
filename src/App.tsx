@@ -40,7 +40,7 @@ function App() {
             onChange={(event) => changeAmount(parseInt(event.target.value))}
             type='number'
             min='1'
-            max='100'
+            max='99'
             name='number'
             id='number'
           />
@@ -92,17 +92,17 @@ function App() {
       </form>
       <div>
         {start ? (
-          amount && type ? (
+          amount > 0 && amount < 100 && type ? (
             <Output date={start.calculate(amount, type)} />
           ) : (
-            <InvalidDataMessage message={'Wprowadź długość terminu'} />
+            <InvalidDataMessage message={'Wprowadź odpowiednią długość i typ terminu'} />
           )
         ) : (
           <InvalidDataMessage message={'Wprowadź datę początkową'} />
         )}
       </div>
       <div>
-        {start && (
+        {(start && amount > 0 && amount < 100 && type) && (
           <div className='flex flex-col place-content-center place-items-center'>
             <p className='mb-1'>{'Sposób obliczenia terminu:'}</p>
             <CalculationVisualisation steps={start.getSteps()} />
