@@ -18,6 +18,7 @@ export default class Term {
     let startDate = new Date(this.start);
     let endDate: Date;
     this.calculationSteps = this.calculationSteps.slice(0, 1);
+
     //calculate endDate given term type
     switch (type) {
       case 'day':
@@ -44,22 +45,36 @@ export default class Term {
       default:
         return startDate;
     }
+    //add last day of term
     this.calculationSteps.push({
       date: endDate,
       step: Step.END,
     });
-    //move to next day if last day is non-labour day
-    while (this.isHoliday(endDate)) {
-      endDate = new Date(endDate.getTime() + 1000 * 60 * 60 * 24);
+
+    //check if holiday shifts are needed
+    let isHoliday: boolean | Step = this.isHoliday(endDate);
+
+    if (isHoliday) {
+      //shift to next day if last day is non-labour day
+      while (typeof isHoliday !== 'boolean') {
+        this.calculationSteps.push({
+          date: new Date(endDate),
+          step: isHoliday,
+        });
+        endDate = new Date(endDate.getTime() + 1000 * 60 * 60 * 24);
+        isHoliday = this.isHoliday(endDate);
+      }
+
+      //add day after shifts
+      this.calculationSteps.push({
+        date: endDate,
+        step: Step.SHIFT_END,
+      });
     }
-    this.calculationSteps.push({
-      date: endDate,
-      step: Step.SHIFT_END,
-    });
     return endDate;
   }
 
-  //generate wielkanoc day for desired year
+  //generate wielkanoc day for desired year - Gaussian method
   private wielkanoc(year: number): Date {
     let a = 24;
     let b = 5;
@@ -73,81 +88,58 @@ export default class Term {
   }
 
   //check if chosen day is holiday
-  private isHoliday(date: Date): boolean {
+  private isHoliday(date: Date): boolean | Step {
     const day = date.getDate();
     const dayOfWeek = date.getDay();
     const month = date.getMonth();
     //saturday, sunday -> zeslanie Ducha Swietego check redundant
     if (dayOfWeek === 0) {
-      this.calculationSteps.push({ date: new Date(date), step: Step.SUNDAY });
-      return true;
+      return Step.SUNDAY;
     }
     if (dayOfWeek === 6) {
-      this.calculationSteps.push({ date: new Date(date), step: Step.SATURDAY });
-      return true;
+      return Step.SATURDAY;
     }
     switch (month) {
       case 0: //styczen
         //nowy rok, trzech kroli
         if (day === 1) {
-          this.calculationSteps.push({ date: new Date(date), step: Step.NY });
-          return true;
+          return Step.NY;
         }
         if (day === 6) {
-          this.calculationSteps.push({
-            date: new Date(date),
-            step: Step.KINGS,
-          });
-          return true;
+          return Step.KINGS;
         }
         break;
       case 4: //maj
         //majowka
         if (day === 1) {
-          this.calculationSteps.push({ date: new Date(date), step: Step.MAY1 });
-          return true;
+          return Step.MAY1;
         }
         if (day === 3) {
-          this.calculationSteps.push({ date: new Date(date), step: Step.MAY3 });
-          return true;
+          return Step.MAY3;
         }
         break;
       case 7: //sierpien
         //wnieboziecie NMP
         if (day === 15) {
-          this.calculationSteps.push({ date: new Date(date), step: Step.NMP });
-          return true;
+          return Step.NMP;
         }
         break;
       case 10: //listopad
         //wszystkich swietych, swieto niepodleglosci
         if (day === 1) {
-          this.calculationSteps.push({ date: new Date(date), step: Step.NOV1 });
-          return true;
+          return Step.NOV1;
         }
         if (day === 11) {
-          this.calculationSteps.push({
-            date: new Date(date),
-            step: Step.INDEPENDENCE,
-          });
-          return true;
+          return Step.INDEPENDENCE;
         }
         break;
       case 11: //grudzien
         //Boze narodzenie, sw. Szczepana
         if (day === 25) {
-          this.calculationSteps.push({
-            date: new Date(date),
-            step: Step.CHRISTMASS,
-          });
-          return true;
+          return Step.CHRISTMASS;
         }
         if (day === 26) {
-          this.calculationSteps.push({
-            date: new Date(date),
-            step: Step.BOXING,
-          });
-          return true;
+          return Step.BOXING;
         }
         break;
     }
@@ -165,14 +157,11 @@ export default class Term {
       day === poniedzialekWielkanocny.getDate() &&
       month === poniedzialekWielkanocny.getMonth()
     ) {
-      this.calculationSteps.push({ date: new Date(date), step: Step.PW });
-      return true;
+      return Step.PW;
     }
     if (day === bozeCialo.getDate() && month === bozeCialo.getMonth()) {
-      this.calculationSteps.push({ date: new Date(date), step: Step.BC });
-      return true;
+      return Step.BC;
     }
-
     return false;
   }
 
