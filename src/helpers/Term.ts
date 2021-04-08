@@ -15,7 +15,6 @@ export default class Term {
 
   //calculate and return end date
   calculate(amount: number, parameters: IParameters): Date {
-    console.log('eee');
     let startDate = new Date(this.start);
     let endDate: Date;
     this.calculationSteps = this.calculationSteps.slice(0, 1);
@@ -173,7 +172,6 @@ export default class Term {
   }
 
   getSteps() {
-    console.log(this.calculationSteps);
     return this.calculationSteps;
   }
 }

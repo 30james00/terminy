@@ -4,13 +4,14 @@ import CalculationVisualisationStep from './CalculationVisualisationStep';
 
 interface IProps {
   steps: CalculationStep[];
+  type: string;
 }
 
-const CalculationVisualisation: React.FC<IProps> = ({ steps }) => {
+const CalculationVisualisation: React.FC<IProps> = ({ steps, type }) => {
   return (
     <div>
       {steps.map((value, inx) => {
-        return <CalculationVisualisationStep key={inx} step={value} />;
+        return <CalculationVisualisationStep key={inx} step={value} type={type}/>;
       })}
     </div>
   );

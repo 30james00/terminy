@@ -28,22 +28,24 @@ function App() {
   };
 
   return (
-    <div className='container flex flex-col place-content-center place-items-center mt-3 p-2'>
+    <div className='col mt-3 p-2'>
       <h1 className='mb-4 text-4xl font-black'>Terminy</h1>
-      <p className='mb-1'>{'Wybierz datę poczatkową:'}</p>
-      <div className='mb-2'>
-        <form>
-          <input
-            className='px-2 py-1 border-2 rounded'
-            onChange={handleDateChange}
-            type='date'
-            name='date'
-            id='date'
-          />
-        </form>
+      <div className='col'>
+        <p className='sh'>{'Wybierz datę poczatkową:'}</p>
+        <div className='mb-2'>
+          <form>
+            <input
+              className='px-2 py-1 border-2 rounded'
+              onChange={handleDateChange}
+              type='date'
+              name='date'
+              id='date'
+            />
+          </form>
+        </div>
       </div>
-      <form className='flex flex-col'>
-        <p className='mb-1'>{'Ustaw parametry terminu:'}</p>
+      <form className='col'>
+        <p className='sh'>{'Ustaw parametry terminu:'}</p>
         <label>
           {'Ilość:'}
           <input
@@ -107,16 +109,14 @@ function App() {
           />
           {'Lat'}
         </label>
-      </form>
-      <form>
-        <label className='flex-shrink'>
+        <label>
           <input
             className='mr-1'
             type='checkbox'
             name='dontShift'
             value='dontShift'
             checked={parameters.dontShift}
-            onChange={(event) => 
+            onChange={(event) =>
               changeParameters({
                 amount: parameters.amount,
                 type: parameters.type,
@@ -142,9 +142,12 @@ function App() {
       </div>
       <div>
         {start && parameters.amount > 0 && parameters.amount < 100 && (
-          <div className='flex flex-col place-content-center place-items-center'>
-            <p className='mb-1'>{'Sposób obliczenia terminu:'}</p>
-            <CalculationVisualisation steps={start.getSteps()} />
+          <div className='col'>
+            <p className='sh'>{'Sposób obliczenia terminu:'}</p>
+            <CalculationVisualisation
+              steps={start.getSteps()}
+              type={parameters.type}
+            />
           </div>
         )}
       </div>
