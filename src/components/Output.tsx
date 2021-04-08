@@ -1,11 +1,11 @@
 import React from 'react';
 import { Week, Year } from '../helpers/calendar';
 
-interface Props {
+interface IProps {
   date: Date;
 }
 
-const Output: React.FC<Props> = ({ date }) => {
+const Output: React.FC<IProps> = ({ date }) => {
   return (
     <div className='flex flex-col place-items-center m-2 px-7 py-2 bg-green-100 rounded-md'>
       <h2 className='text-green-700 text-bold '>Wynik:</h2>
