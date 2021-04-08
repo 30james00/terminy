@@ -1,4 +1,5 @@
 import { CalculationStep, Step } from './CalculationStep';
+import IParameters from './IParameters';
 
 export default class Term {
   private start: Date;
@@ -13,14 +14,14 @@ export default class Term {
   }
 
   //calculate and return end date
-  calculate(amount: number, type: string): Date {
+  calculate(amount: number, parameters: IParameters): Date {
     console.log('eee');
     let startDate = new Date(this.start);
     let endDate: Date;
     this.calculationSteps = this.calculationSteps.slice(0, 1);
 
     //calculate endDate given term type
-    switch (type) {
+    switch (parameters.type) {
       case 'day':
         this.calculationSteps.push({
           date: new Date(
@@ -61,7 +62,13 @@ export default class Term {
           date: new Date(endDate),
           step: isHoliday,
         });
-        endDate = new Date(endDate.getTime() + 1000 * 60 * 60 * 24);
+
+        //shift back if dontShift is enabled else shift forward
+        if (parameters.dontShift)
+          endDate = new Date(endDate.getTime() - 1000 * 60 * 60 * 24);
+        else endDate = new Date(endDate.getTime() + 1000 * 60 * 60 * 24);
+
+        //check next day
         isHoliday = this.isHoliday(endDate);
       }
 
