@@ -142,7 +142,7 @@ function App() {
       </div>
       <div>
         {start && parameters.amount > 0 && parameters.amount < 100 && (
-          <div className='col'>
+          <div className='col max-w-prose'>
             <p className='sh'>{'Sposób obliczenia terminu:'}</p>
             <CalculationVisualisation
               steps={start.getSteps()}
