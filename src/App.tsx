@@ -5,6 +5,7 @@ import Output from './components/Output';
 import InvalidDataMessage from './components/InvalidDataMessage';
 import CalculationVisualisation from './components/CalculationVisualisation';
 import IParameters from './helpers/IParameters';
+import StateButton from './components/StateButton';
 
 function App() {
   const [start, changeStart] = useState<Term | null>(null);
@@ -35,7 +36,7 @@ function App() {
         <div className='mb-2'>
           <form>
             <input
-              className='px-2 py-1 border-2 rounded'
+              className='px-2 py-1 border-2 border-blue-900 rounded-md'
               onChange={handleDateChange}
               type='date'
               name='date'
@@ -49,7 +50,7 @@ function App() {
         <label>
           {'Ilość:'}
           <input
-            className='ml-1 border'
+            className='ml-2 p-1 w-12 rounded-md border-2 border-blue-900'
             value={parameters.amount}
             onChange={(event) =>
               changeParameters({
@@ -65,50 +66,32 @@ function App() {
             id='number'
           />
         </label>
-        <label>
-          <input
-            className='mr-1'
-            type='radio'
-            name='type'
-            value='day'
-            checked={parameters.type === 'day'}
-            onChange={(event) => handleTypeChange(event.target.value)}
+        <div className='flex flex-row my-2 rounded-md border-2 border-blue-900'>
+          <StateButton
+            desirableState='day'
+            state={parameters.type}
+            label='Dni'
+            changeState={() => handleTypeChange('day')}
           />
-          {'Dni'}
-        </label>
-        <label>
-          <input
-            className='mr-1'
-            type='radio'
-            name='type'
-            value='week'
-            checked={parameters.type === 'week'}
-            onChange={(event) => handleTypeChange(event.target.value)}
+          <StateButton
+            desirableState='week'
+            state={parameters.type}
+            label='Tygodni'
+            changeState={() => handleTypeChange('week')}
           />
-          {'Tygodni'}
-        </label>
-        <label>
-          <input
-            className='mr-1'
-            type='radio'
-            name='type'
-            value='month'
-            checked={parameters.type === 'month'}
-            onChange={(event) => handleTypeChange(event.target.value)}
+          <StateButton
+            desirableState='month'
+            state={parameters.type}
+            label='Miesięcy'
+            changeState={() => handleTypeChange('month')}
           />
-          {'Miesięcy'}
-        </label>
-        <label>
-          <input
-            className='mr-1'
-            type='radio'
-            name='type'
-            value='year'
-            checked={parameters.type === 'year'}
-            onChange={(event) => handleTypeChange(event.target.value)}
+          <StateButton
+            desirableState='year'
+            state={parameters.type}
+            label='Lat'
+            changeState={() => handleTypeChange('year')}
           />
-          {'Lat'}
-        </label>
+        </div>
         <label>
           <input
             className='mr-1'
