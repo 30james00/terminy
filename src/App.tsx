@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-import Term from './helpers/Term';
 import Output from './components/Output';
 import InvalidDataMessage from './components/InvalidDataMessage';
 import CalculationVisualisation from './components/CalculationVisualisation';
 import IParameters from './helpers/IParameters';
 import StateButton from './components/StateButton';
+import Deadline from './helpers/Deadline';
 
 function App() {
-  const [start, changeStart] = useState<Term | null>(null);
+  const [start, changeStart] = useState<Deadline | null>(null);
   const [parameters, changeParameters] = useState<IParameters>({
     amount: 1,
     type: 'day',
@@ -17,7 +17,7 @@ function App() {
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const val = event.target.valueAsDate;
-    if (val) changeStart(new Term(val));
+    if (val) changeStart(new Deadline(val));
   };
 
   const handleTypeChange = (type: string) => {

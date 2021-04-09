@@ -1,7 +1,7 @@
 import { ICalculationStep, Step } from './ICalculationStep';
 import IParameters from './IParameters';
 
-export default class Term {
+export default class Deadline {
   private start: Date;
   private calculationSteps: Array<ICalculationStep> = [];
 
