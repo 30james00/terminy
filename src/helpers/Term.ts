@@ -18,6 +18,8 @@ export default class Term {
     let startDate = new Date(this.start);
     let endDate: Date;
     this.calculationSteps = this.calculationSteps.slice(0, 1);
+    let backupDate: Date;
+    let delta: number;
 
     //calculate endDate given term type
     switch (parameters.type) {
@@ -34,12 +36,28 @@ export default class Term {
         endDate = new Date(startDate.setDate(startDate.getDate() + amount * 7));
         break;
       case 'month':
+        //start date
+        backupDate = new Date(startDate);
         endDate = new Date(startDate.setMonth(startDate.getMonth() + amount));
+        //last day of month
+        delta = endDate.getDate() - backupDate.getDate();
+        while (delta < -1) {
+          endDate = new Date(endDate.getTime() - 1000 * 60 * 60 * 24);
+          delta = endDate.getDate() - backupDate.getDate();
+        }
         break;
       case 'year':
+        //start date
+        backupDate = new Date(startDate);
         endDate = new Date(
           startDate.setFullYear(startDate.getFullYear() + amount)
         );
+        //last day of month
+        delta = endDate.getDate() - backupDate.getDate();
+        while (delta < -1) {
+          endDate = new Date(endDate.getTime() - 1000 * 60 * 60 * 24);
+          delta = endDate.getDate() - backupDate.getDate();
+        }
         break;
       //radio must be unchecked - imposible?
       default:

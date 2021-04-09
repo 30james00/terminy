@@ -16,12 +16,12 @@ const StateButton: React.FC<IProps> = ({
   return (
     <div
       className={
-        (state === desirableState ? '' : 'bg-blue-900') + ' px-4 py-1'
+        (state === desirableState ? 'bg-blue-900' : '') + ' px-4 py-1'
       }
       onClick={changeState}
     >
       <p
-        className={(state === desirableState ? 'text-blue-900' : 'text-white') + ' font-bold'}
+        className={(state === desirableState ? 'text-white' : 'text-blue-900') + ' font-bold'}
       >
         {label}
       </p>

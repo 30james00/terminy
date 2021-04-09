@@ -45,27 +45,8 @@ function App() {
           </form>
         </div>
       </div>
-      <form className='col'>
+      <div className='col'>
         <p className='sh'>{'Ustaw parametry terminu:'}</p>
-        <label>
-          {'Ilość:'}
-          <input
-            className='ml-2 p-1 w-12 rounded-md border-2 border-blue-900'
-            value={parameters.amount}
-            onChange={(event) =>
-              changeParameters({
-                amount: parseInt(event.target.value),
-                type: parameters.type,
-                dontShift: parameters.dontShift,
-              })
-            }
-            type='number'
-            min='1'
-            max='99'
-            name='number'
-            id='number'
-          />
-        </label>
         <div className='flex flex-row my-2 rounded-md border-2 border-blue-900'>
           <StateButton
             desirableState='day'
@@ -93,6 +74,25 @@ function App() {
           />
         </div>
         <label>
+          {'Ilość:'}
+          <input
+            className='ml-2 p-1 w-12 rounded-md border-2 border-blue-900'
+            value={parameters.amount}
+            onChange={(event) =>
+              changeParameters({
+                amount: parseInt(event.target.value),
+                type: parameters.type,
+                dontShift: parameters.dontShift,
+              })
+            }
+            type='number'
+            min='1'
+            max='99'
+            name='number'
+            id='number'
+          />
+        </label>
+        <label>
           <input
             className='mr-1'
             type='checkbox'
@@ -109,7 +109,7 @@ function App() {
           />
           {'Wyjątek od art. 123 par. 3'}
         </label>
-      </form>
+      </div>
       <div>
         {start ? (
           parameters.amount > 0 && parameters.amount < 100 ? (
