@@ -1,9 +1,9 @@
 import React from 'react';
-import { CalculationStep } from '../helpers/CalculationStep';
+import { ICalculationStep } from '../helpers/ICalculationStep';
 import CalculationVisualisationStep from './CalculationVisualisationStep';
 
 interface IProps {
-  steps: CalculationStep[];
+  steps: ICalculationStep[];
   type: string;
 }
 

@@ -18,7 +18,7 @@ export enum Step {
   BC
 }
 
-export interface CalculationStep {
+export interface ICalculationStep {
   date: Date;
   step: Step;
 }

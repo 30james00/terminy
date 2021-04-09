@@ -1,9 +1,9 @@
-import { CalculationStep, Step } from './CalculationStep';
+import { ICalculationStep, Step } from './ICalculationStep';
 import IParameters from './IParameters';
 
 export default class Term {
   private start: Date;
-  private calculationSteps: Array<CalculationStep> = [];
+  private calculationSteps: Array<ICalculationStep> = [];
 
   constructor(start: Date) {
     this.start = start;

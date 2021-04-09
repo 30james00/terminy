@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CalculationStep, Step } from '../helpers/CalculationStep';
+import { ICalculationStep, Step } from '../helpers/ICalculationStep';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 import { Year } from '../helpers/calendar';
 
@@ -54,7 +54,7 @@ function why(step: Step, type: string): string {
 }
 
 interface IProps {
-  step: CalculationStep;
+  step: ICalculationStep;
   type: string;
 }
 
