@@ -41,7 +41,7 @@ export default class Deadline {
         endDate = new Date(startDate.setMonth(startDate.getMonth() + amount));
         //last day of month
         delta = endDate.getDate() - backupDate.getDate();
-        while (delta < -1) {
+        while (delta < -3) {
           endDate = new Date(endDate.getTime() - 1000 * 60 * 60 * 24);
           delta = endDate.getDate() - backupDate.getDate();
         }
